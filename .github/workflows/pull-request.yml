@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-run-name: ${{ github.action }} has opened/updated a pull request
+run-name: ${{ github.actor }} has opened/updated a pull request
 
 jobs:
     terraform-validate-plan:

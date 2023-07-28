@@ -102,4 +102,4 @@ jobs:
             - name: Terraform apply ✅
               if: inputs.apply-config == true
               id: apply
-              run: terraform apply
+              run: terraform apply -auto-approve

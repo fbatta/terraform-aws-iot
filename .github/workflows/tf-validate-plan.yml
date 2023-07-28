@@ -30,7 +30,7 @@ jobs:
             
             - name: Terraform init 🐣
               id: init
-              run: terraform init
+              run: terraform init -input=false
             
             - name: Terraform validate 🤖
               id: validate
@@ -38,8 +38,14 @@ jobs:
             
             - name: Terraform plan 📖
               id: plan
-              run: terraform plan -no-color
+              run: terraform plan -no-color -input=false -out=tf.plan
               continue-on-error: true
+
+            - name: ⬆️ Upload plan
+              uses: actions/upload-artifact@v3
+              with:
+                name: Terraform plan
+                path: tf.plan
 
             - name: Add PR comment 💭
               uses: actions/github-script@v6
@@ -102,4 +108,4 @@ jobs:
             - name: Terraform apply ✅
               if: inputs.apply-config == true
               id: apply
-              run: terraform apply -auto-approve
+              run: terraform apply tf.plan

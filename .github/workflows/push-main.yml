@@ -1,0 +1,20 @@
+name: Merge to main
+
+on:
+    push:
+        branches:
+            - main
+
+run-name: ${{ github.actor }} has merged a pull request to main
+
+jobs:
+    terraform-validate-plan-apply:
+        # Needed to interact with GitHub's OIDC token endpoint
+        permissions:
+            id-token: write
+            contents: read
+            # Need to be able to add a comment to PR
+            pull-requests: write
+        uses: ./.github/workflows/tf-validate-plan.yml
+        with:
+            apply-config: true
